@@ -22,10 +22,16 @@ class user(db.Model):
     phone_number = db.Column(db.Integer, unique=True, nullable=False)
     posting = db.Column(db.String(100), nullable=False, primary_key=True)
     status = db.Column(db.Integer, default=0, primary_key=True)
+    
+    def __repr__ (): 
+      return f"{self.id},{self.name},{self.year},{self.batch},{self.dept},{self.email},{self.password},{self.phone_number},{self.posting},{self.status}"
 
 class admin(db.Model): 
     id = db.Column(db.String(50), nullable=False, primary_key=True)
     password = db.Column(db.String(200), nullable=False)
+    
+    def __repr__(): 
+      return f"{self.id},{self.password}"
 
 @app.route('/admin')
 def Admin():
