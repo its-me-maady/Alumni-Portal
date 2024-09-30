@@ -13,10 +13,12 @@
 {% block navbar %}
 <nav class="navbar shadow-lg fixed-top bg-primary container-fluid">
   <div class="container">
+    <div class="position-absolute top-50 start-0 translate-middle-y">
     <a class="navbar-brand align-bottom text-end" style="font-size: 19px;" href="/">
     <img src="{{url_for('static', filename='images/vaigai-logo.jpg')}}" alt="Logo" width="30" height="24" classs="d-inline-block">
     VAIGAI COLLEGE OF ENGINEERING
     </a>
+    </div>
   </div>
 </nav>
 {% endblock navbar %}
