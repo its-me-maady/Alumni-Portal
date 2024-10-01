@@ -26,37 +26,28 @@
     </a>
   </div>
 </nav>
-<div class="border shadow rounded container w-75 p-3 mt-6">
+<div class="shadow container p-3 mt-6 w-50 rouned border">
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <button class="nav-link active" id="Login" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-        role="tab" aria-controls="nav-home" aria-selected="true">Login</button>
-      <button class="nav-link" id="Signup" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
-        role="tab" aria-controls="nav-profile" aria-selected="false">Register</button>
-    </div>
+      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Home</button>
+      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab" aria-controls="signup" aria-selected="false">Profile</button>
+      </div>
   </nav>
-  <div class="tab-content mt-5" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="Login" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-      <div class="form-floating my-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
-        <div class="col-12">
-          <a class="p-1 rounded" href="#simple-list-item-1">Don't have account? Signup</a>
-          <button class="btn btn-primary my-1" type="submit">Submit form</button>
+  <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+          <div class="form-floating w-75 mt-5 mx-3">
+            <input type="email" class="form-control" id="Email" placeholder="name@example.com">
+            <label for="Email">Email address</label>
+          </div>
+          <div class="form-floating w-75 my-3 mx-3">
+            <input type="password" class="form-control col-sm-2 col-form-label col-form-label-lg" id="password" placeholder="Password">
+            <label for="password">Password</label>
+          </div>
         </div>
-      </div>
     </div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-      Register
-    </div>
+    <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">.....</div>
   </div>
 </div>
-
-
 <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js"
   crossorigin="anonymous"></script>
 <script type="importmap">
