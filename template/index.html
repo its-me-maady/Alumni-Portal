@@ -11,7 +11,7 @@
 </head>
 {% endblock head %}
 {% block navbar %}
-<nav class="navbar mb-5 fixed-top bg-primary">
+<nav class="navbar fixed-top bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
       <img src="{{url_for('static', filename='images/vaigai-logo.jpg')}}" alt="Vaigai" class="rounded" width="30" height="24">
@@ -19,7 +19,7 @@
     </a>
   </div>
 </nav>
-<div class="border border-primary shadow container w-75 p-2 my-5">
+<div class="border border-primary shadow container w-75 p-2 my-auto">
  <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Login</button>
