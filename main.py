@@ -1,12 +1,12 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
  
 app = Flask(__name__,  template_folder='template')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite'
-app.config['SECRETE_KEY'] = "f42235007358c148d80e28bb"
+app.config['SECRETE_KEY'] = os.environ['SECRETE_KEY']
 
 db = SQLAlchemy(app)
 
@@ -37,8 +37,11 @@ def Admin():
 
 #--------------------------------------^admin panel^--------------------------------
 
-@app.route('/')
+@app.route('/',methods=["GET","POST"])
 def index():
+    if request.method == "POST" :
+       name = request.form.get("name")
+       password = request.form.get("pass")
     return render_template("index.html") 
 
 
