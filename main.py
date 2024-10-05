@@ -1,14 +1,16 @@
 import os
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 basedir = os.path.abspath(os.path.dirname(__file__))
  
 app = Flask(__name__,  template_folder='template')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 app.config['SECRETE_KEY'] = os.environ['SECRETE_KEY']
 
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 class user(db.Model):
     id = db.Column(db.String(50), nullable=False, primary_key=True)
@@ -31,6 +33,7 @@ class admin(db.Model):
     def __repr__(self): 
       return f"{self.id},{self.password}"
 
+
 @app.route('/admin')
 def Admin():
     return render_template("admin/Admin-layout.html")
@@ -40,9 +43,10 @@ def Admin():
 @app.route('/',methods=["GET","POST"])
 def index():
     if request.method == "POST" :
-       if request.form.get("name") :
-        name = request.form.get("name")
-        password = request.form.get("pass")
+       if request.form.get("Email") :
+        Email = request.form.get("Email")
+        password = bcrypt.generate_password_hash(request.form.get("pass"))
+        new_user = db.filter_by(email=Email)
     return render_template("index.html") 
 
 
