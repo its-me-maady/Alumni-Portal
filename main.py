@@ -40,8 +40,9 @@ def Admin():
 @app.route('/',methods=["GET","POST"])
 def index():
     if request.method == "POST" :
-       name = request.form.get("name")
-       password = request.form.get("pass")
+       if request.form.get("name") :
+        name = request.form.get("name")
+        password = request.form.get("pass")
     return render_template("index.html") 
 
 
