@@ -12,7 +12,7 @@ app.config['SECRETE_KEY'] = os.environ['SECRETE_KEY']
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-class user(db.Model):
+class User(db.Model):
     id = db.Column(db.String(50), nullable=False, primary_key=True)
     name = db.Column(db.String(100), nullable=False, primary_key=True)
     year = db.Column(db.Integer, nullable=False, primary_key=True)
@@ -26,7 +26,7 @@ class user(db.Model):
     def __repr__ (self): 
       return f"{self.id},{self.name},{self.year},{self.batch},{self.dept},{self.email},{self.password},{self.phone_number},{self.posting},{self.status}"
 
-class admin(db.Model): 
+class Admin(db.Model): 
     id = db.Column(db.String(50), nullable=False, primary_key=True)
     password = db.Column(db.String(200), nullable=False)
     
@@ -42,11 +42,7 @@ def Admin():
 
 @app.route('/',methods=["GET","POST"])
 def index():
-    if request.method == "POST" :
-       if request.form.get("Email") :
-        Email = request.form.get("Email")
-        password = bcrypt.generate_password_hash(request.form.get("pass"))
-        new_user = db.filter_by(email=Email)
+    #
     return render_template("index.html") 
 
 
