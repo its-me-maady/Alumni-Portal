@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 
@@ -8,12 +8,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__,  template_folder='template')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 app.config['SECRETE_KEY'] = os.environ['SECRETE_KEY']
+app.secret_key = os.environ['SECRETE_KEY']
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 class User(db.Model):
-    id = db.Column(db.String(50), nullable=False, primary_key=True)
     name = db.Column(db.String(100), nullable=False, primary_key=True)
     year = db.Column(db.Integer, nullable=False, primary_key=True)
     dept = db.Column(db.String(100), nullable=False, primary_key=True)
@@ -24,7 +24,7 @@ class User(db.Model):
     status = db.Column(db.Integer, default=0, primary_key=True)
     
     def __repr__ (self): 
-      return f"{self.id},{self.name},{self.year},{self.batch},{self.dept},{self.email},{self.password},{self.phone_number},{self.posting},{self.status}"
+      return f"{self.name},{self.year},{self.batch},{self.dept},{self.email},{self.password},{self.phone_number},{self.posting},{self.status}"
 
 class Admin(db.Model): 
     id = db.Column(db.String(50), nullable=False, primary_key=True)
@@ -40,11 +40,19 @@ def Admin():
 
 #--------------------------------------^admin panel^--------------------------------
 
-@app.route('/',methods=["GET","POST"])
+@app.route('/')
 def index():
-    #
     return render_template("index.html") 
 
+@app.route("/user_dashboard",methods=["GET","POST"])
+def user_page():
+    if request.method == "POST":
+            print("visited")
+            user = User.query.filter_by(email=request.form.get("Email")).first()
+            if user :
+                return render_template("User-layout.html",user=user)
+    flash("Invalid credentials","danger")
+    return redirect("/")
 
 if __name__ == '__main__':
     app.run(debug=True)
