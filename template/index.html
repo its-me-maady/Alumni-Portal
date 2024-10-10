@@ -35,7 +35,7 @@
 {% with messages=get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category,message in messages %}
-  <div class="alert mt-5 w-50 container alert-{{category}}">
+  <div class="alert mt-5 w-75 container alert-{{category}}">
     <strong>{{message}}</strong>
   </div>
 {% endfor %}
@@ -52,7 +52,7 @@
     </nav>
     <div class="tab-content p-5 px-5" id="nav-tabContent">
         <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="nav-login-tab" tabindex="0">
-            <form action="/user_dashboard" method="post">
+            <form action="/" method="post">
             <div class="form-floating">
               <input type="email" class="form-control" name="Email" id="Email" required placeholder="name@example.com">
               <label for="Email">Email address</label>
@@ -68,31 +68,38 @@
             </form>
           </div>
       <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="nav-signup-tab" tabindex="0">
-        <form action="/" method=post
-      oninput='Conf.setCustomValidity(Conf.value != pass.value ? "Passwords do not match." : "")'>
+        <form action="/user/signup" method=post oninput='Conf.setCustomValidity(Conf.value != pass.value ? "Passwords do not match." : "")'>
         <H1 class="px-2 text-center">Fill the Following Details</H1>
         <div class="form-floating mt-3">
-          <input required type="text" class="form-control" name="name" id="Name" placeholder="Name">
+          <input required type="text" class="form-control" name="Name" id="Name" placeholder="Name">
           <label for="Name">Name</label>
         </div>
         <div class="form-floating my-3">
           <input required type="number" name="Year" min="2012" max="2099" step="1" value="2016"  class="form-control" id="Year" placeholder="">
           <label for="Year">Year passed</label>
         </div>
+        <label for="sel1">Department :</label>
+          <select class="form-control mt-2" id="dep" name="Dept">
+            <option>Computer Science and Engineering</option>
+            <option>Electronics and Communication Engineering</option>
+            <option>Eelectrical and Electronics Engineering</option>
+            <option>Civil Engineering</option>
+            <option>Mechanical Engineering</option>
+          </select>
         <div class="form-floating my-3">
-          <input required type="email" name="r-Email" class="form-control" id="r-Email" placeholder="name@example.com">
+          <input required type="email" name="Email" class="form-control" id="r-Email" placeholder="name@example.com">
           <label for="r-Email">Email address</label>
         </div>
         <div class="form-floating my-3">
-          <input required type="text" name="p-no" class="form-control" id="ph_no" placeholder="9999999999">
+          <input required type="number" name="ph_no" class="form-control" id="ph_no" placeholder="9999999999">
           <label for="ph_no">Phone number</label>
         </div>
         <div class="form-floating my-3">
-          <input required class="form-control" name="post" placeholder="Posting" id="posting">
+          <input required class="form-control" name="Posting" placeholder="Posting" id="posting">
           <label for="posting">Posting</label>
         </div>
         <div class="form-floating my-3">
-          <input required type="password" name="r-pass" class="form-control" id="r-password" placeholder="Password" name="pass">
+          <input required type="password" name="password" class="form-control" id="r-password" placeholder="Password" name="pass">
           <label for="r-password">Password</label>
         </div>
         <div class="form-floating my-3">
