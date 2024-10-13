@@ -46,7 +46,7 @@ def index():
         Email = request.form.get("Email")
         Password = request.form.get("Email")
         users=User().query.filter_by(email=Email).first()
-        print(bcrypt.check_password_hash(users.password,Password+os.environ["SALT"]))
+        print(bcrypt.generate_password_hash(Password+os.environ["SALT"]),user.password)
         if users and bcrypt.check_password_hash(users.password,Password+os.environ["SALT"]):
             is_approve=User.query.filter_by(id=users.id).first()
             if is_approve.status == 0:
