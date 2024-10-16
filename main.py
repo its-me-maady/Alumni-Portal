@@ -23,6 +23,12 @@ class User(db.Model):
     posting = db.Column(db.String(100), nullable=False, primary_key=True)
     status = db.Column(db.Integer, default=0, primary_key=True)
     
+    def set_password(self, password):
+                self.password = bcrypt.generate_password_hash(password+os.environ["SALT"]).decode("utf-8")
+    
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password+os.environ["SALT"])
+
     def __repr__ (self): 
       return f"{self.name},{self.year},{self.batch},{self.dept},{self.email},{self.password},{self.phone_number},{self.posting},{self.status}"
 
@@ -30,6 +36,12 @@ class Admin(db.Model):
     id = db.Column(db.String(50), nullable=False, primary_key=True)
     password = db.Column(db.String(200), nullable=False)
     
+    def set_password(self, password):
+                self.password_hash = bcrypt.generate_password_hash(password+os.environ["SALT"]).decode("utf-8")
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password+os.environ["SALT"])
+
     def __repr__(self): 
       return f"{self.id},{self.password}"
 
@@ -44,10 +56,10 @@ def Admin():
 def index():
     if request.method == "POST":
         Email = request.form.get("Email")
-        Password = request.form.get("Email")
+        Password = request.form.get("pass")
         users=User().query.filter_by(email=Email).first()
-        print(bcrypt.generate_password_hash(Password+os.environ["SALT"]),user.password)
-        if users and bcrypt.check_password_hash(users.password,Password+os.environ["SALT"]):
+        print(type(users.password),type(bcrypt.generate_password_hash(Password)))
+        if users and users.check_password(Password):
             is_approve=User.query.filter_by(id=users.id).first()
             if is_approve.status == 0:
                 flash('Your Account is not approved by Admin','danger')
@@ -77,8 +89,9 @@ def user_page():
         if is_email:
             flash('Email already Exist','danger')
             return redirect('/')
-        Password = bcrypt.generate_password_hash(Password+os.environ["SALT"],10)
-        user = User(name=Name,year=Year,dept=Dept,posting=Posting,email=Email,phone_number=ph_no,password=Password,status=1)
+        Password = bcrypt.generate_password_hash(Password,10).decode('utf-8')
+        user = User(name=Name,year=Year,dept=Dept,posting=Posting,email=Email,phone_number=ph_no,status=1)
+        user.set_password(Password)
         db.session.add(user)
         db.session.commit()
         flash("Account created wait till admin approves your account!","success")
@@ -89,6 +102,6 @@ def user_dash():
     return "logged in"
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+    #with app.app_context :
+    #db.create_all()
     app.run(debug=True,port=8080)
