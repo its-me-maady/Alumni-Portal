@@ -24,10 +24,10 @@ class User(db.Model):
     status = db.Column(db.Integer, default=0, primary_key=True)
     
     def set_password(self, password):
-                self.password = bcrypt.generate_password_hash(password+os.environ["SALT"]).decode("utf-8")
+        self.password = bcrypt.generate_password_hash(password,10).decode("utf-8")
     
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password+os.environ["SALT"])
+        return bcrypt.check_password_hash(self.password, password)
 
     def __repr__ (self): 
       return f"{self.name},{self.year},{self.batch},{self.dept},{self.email},{self.password},{self.phone_number},{self.posting},{self.status}"
@@ -37,10 +37,10 @@ class Admin(db.Model):
     password = db.Column(db.String(200), nullable=False)
     
     def set_password(self, password):
-                self.password_hash = bcrypt.generate_password_hash(password+os.environ["SALT"]).decode("utf-8")
+                self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password+os.environ["SALT"])
+        return bcrypt.check_password_hash(self.password, password)
 
     def __repr__(self): 
       return f"{self.id},{self.password}"
@@ -89,7 +89,6 @@ def user_page():
         if is_email:
             flash('Email already Exist','danger')
             return redirect('/')
-        Password = bcrypt.generate_password_hash(Password,10).decode('utf-8')
         user = User(name=Name,year=Year,dept=Dept,posting=Posting,email=Email,phone_number=ph_no,status=1)
         user.set_password(Password)
         db.session.add(user)
@@ -101,7 +100,14 @@ def user_page():
 def user_dash():
     return "logged in"
 
-if __name__ == '__main__':
-    with app.app_context :
-     db.create_all()
-    app.run(debug=True,port=8080)
+@app.route("/deleteall")
+def clear_data():
+    meta = db.metadata
+    for table in reversed(meta.sorted_tables):
+        db.session.execute(table.delete())
+    db.session.commit()
+    flash("Database cleared","danger")
+    return redirect("/")
+
+if __name__ == "__main__":
+  app.run(debug=True)
