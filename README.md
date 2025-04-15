@@ -21,6 +21,10 @@ A web application for managing alumni connections and events, built with Flask.
 -   Forms: Flask-WTF
 -   Password Hashing: Flask-Bcrypt
 
+## Screenshots
+-https://github.com/its-me-maady/Alumni-Portal/issues/3#issue-2996419886
+
+
 ## Project Structure
 
 ```
